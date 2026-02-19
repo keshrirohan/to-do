@@ -1,49 +1,16 @@
 import express from "express";
-import todoModel from "../models/todo.model.js";
+
+import {
+  deleteData,
+  getdata,
+  postdata,
+  updateData,
+} from "../controller/todo.controller.js";
 const router = express.Router();
 
-router.get("/data", async (req, res) => {
-  console.log("get all data ");
-  const data = await todoModel.find();
-  res.status(200).json(data);
-  console.log("data:", data);
-});
-router.post("/create", async (req, res) => {
-  const { title } = req.body;
-
-  const task = await todoModel.create({ title, completed: false });
-  console.log("task:", task);
-  if (task) {
-    res.status(201).json({ message: "Task created successfully", task });
-  }
-});
-
-router.delete("/delete/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const deletedTask = await todoModel.findByIdAndDelete(id);
-    if (deletedTask) {
-      res
-        .status(200)
-        .json({ message: "Task deleted successfully", deletedTask });
-    }
-  } catch (error) {
-    console.log("Error deleting task:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-router.put("/update/:id", async (req, res) => {
-  const { id } = req.params;
-  const { completed } = req.body;
-  const updatedTask = await todoModel.findByIdAndUpdate(
-    id,
-    { completed },
-    { new: true },
-  );
-  if (updatedTask) {
-    res.status(200).json({ message: "Task updated successfully", updatedTask });
-  }
-});
+router.get("/data", getdata);
+router.post("/create", postdata);
+router.delete("/delete/:id", deleteData);
+router.put("/update/:id", updateData);
 
 export default router;
