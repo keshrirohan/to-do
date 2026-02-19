@@ -194,7 +194,7 @@ export default function Home() {
         {/* Footer */}
         {tasks.length > 0 && (
           <div className="text-center text-sm text-gray-400 mt-8">
-            Keep going! You're doing great 🌟
+            Keep going! You are doing great 🌟
           </div>
         )}
       </div>
